@@ -1,10 +1,14 @@
-import React from "react";
-import TodoApp from "./components/TodoApp";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
+
 
 const App = () => {
-  return <div>
-    <TodoApp />
-  </div>;
+  return (
+    <div>
+      <TodoInput />
+      <TodoList />
+    </div>
+  );
 };
 
 export default App;
