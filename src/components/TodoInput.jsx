@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "../Redux/store/reducers/taskReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../Redux/store/reducers/taskSlice";
 
 const TodoInput = () => {
-  const [task, setTask] = useState("");
+  const [text, setText] = useState("");
+  const value = useSelector((state) => state.todoStore.tasks);
   const dispatch = useDispatch();
 
-  const submitAddTask = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(addTodo(task));
-    setTask('')
+
+    dispatch(
+      addTask({
+        id: value.length + 1,
+        title: text,
+      })
+    );
+    setText("");
   };
 
   return (
@@ -18,12 +25,10 @@ const TodoInput = () => {
         To-Do App
       </h1>
 
-      <form onSubmit={submitAddTask} className="flex items-center mb-4">
+      <form className="flex items-center mb-4" onSubmit={submitHandler}>
         <input
-          value={task}
-          onChange={(e) => {
-            setTask(e.target.value);
-          }}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
           type="text"
           placeholder="Add a new task"
           className="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
